@@ -36,13 +36,13 @@ public class Controller {
 		return response.toStatus400BadRequest();
 	}
 
-//	@RequestMapping(value = "/stats", method = RequestMethod.GET, produces = "application/json")
-//	public @ResponseBody ResponseObject<ResponseStats> stats(ResponseObject<ResponseStats> response) {
-//		ResponseStats result = new ResponseStats().build(firstService.obtenerEstadisticas());
-//		response.setResult(result);
-//
-//		return response.toStatus200OK();
-//	}
+	@RequestMapping(value = "/stats", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody ResponseObject<ResponseStats> stats(ResponseObject<ResponseStats> response) {
+		ResponseStats result = new ResponseStats().build(firstService.obtenerEstadisticas());
+		response.setResult(result);
+
+		return response.toStatus200OK();
+	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/redirect")
 	public ModelAndView redirigirGoogle() {

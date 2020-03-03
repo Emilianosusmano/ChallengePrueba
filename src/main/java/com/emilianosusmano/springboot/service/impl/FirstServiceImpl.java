@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.emilianosusmano.springboot.bo.CadenaAdnBo;
 import com.emilianosusmano.springboot.bo.StatsBo;
-import com.emilianosusmano.springboot.dao.Dao;
+import com.emilianosusmano.springboot.dao.EstadisticaDao;
 //import com.emilianosusmano.springboot.dao.EstadisticaDao;
 import com.emilianosusmano.springboot.dto.CadenaAdnDto;
 import com.emilianosusmano.springboot.dto.StatsDto;
@@ -19,10 +19,8 @@ import com.emilianosusmano.springboot.service.VerificadorMutanteService;
 public class FirstServiceImpl implements FirstService {
 	@Autowired
 	VerificadorMutanteService verificadorMutanteService;
-//	@Autowired
-//	EstadisticaDao estadisticaDao;
 	@Autowired
-	Dao dao;
+	EstadisticaDao estadisticaDao;
 
 	@Override
 	public ResponseMutante validarMutante(CadenaAdnDto adn) {
@@ -41,8 +39,7 @@ public class FirstServiceImpl implements FirstService {
 				response.setStatus(HttpStatus.FORBIDDEN);
 			}
 			try {
-				dao.createAndStorePerson(em);
-//				estadisticaDao.save(em);
+				estadisticaDao.save(em);
 			} catch (Exception e) {
 			}
 		} else {
@@ -52,11 +49,11 @@ public class FirstServiceImpl implements FirstService {
 		return response;
 	}
 
-//	@Override
-//	public StatsDto obtenerEstadisticas() {
-//		StatsBo statsBo = new StatsBo().build(estadisticaDao.countMutants(), estadisticaDao.countNotMutants(),
-//				estadisticaDao.countAll());
-//		StatsDto statsDto = new StatsDto().build(statsBo);
-//		return statsDto;
-//	}
+	@Override
+	public StatsDto obtenerEstadisticas() {
+		StatsBo statsBo = new StatsBo().build(estadisticaDao.countMutants(), estadisticaDao.countNotMutants(),
+				estadisticaDao.countAll());
+		StatsDto statsDto = new StatsDto().build(statsBo);
+		return statsDto;
+	}
 }

@@ -8,6 +8,6 @@ public interface FirstService {
 	
 	ResponseMutante validarMutante(CadenaAdnDto adn);
 	
-//	StatsDto obtenerEstadisticas();
+	StatsDto obtenerEstadisticas();
 		
 }
