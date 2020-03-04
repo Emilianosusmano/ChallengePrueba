@@ -1,7 +1,10 @@
 package com.emilianosusmano.springboot.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,12 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.emilianosusmano.springboot.dto.CadenaAdnDto;
+import com.emilianosusmano.springboot.entities.EstadisticaMutante;
 import com.emilianosusmano.springboot.responses.ResponseMutante;
 import com.emilianosusmano.springboot.responses.ResponseObject;
 import com.emilianosusmano.springboot.responses.ResponseStats;
 import com.emilianosusmano.springboot.service.FirstService;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/challenge")
 public class Controller {
 	@Autowired
@@ -47,6 +52,12 @@ public class Controller {
 	@RequestMapping(method = RequestMethod.GET, value = "/redirect")
 	public ModelAndView redirigirGoogle() {
 		return new ModelAndView("redirect:http://www.google.com.ar");
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/obtenerTodos")
+	public ResponseObject<List<EstadisticaMutante>> obtenerTodos(ResponseObject<List<EstadisticaMutante>> response) {
+		response.setResult(firstService.obtenerDatosEstadistica());
+		return response.toStatus200OK();
 	}
 
 }

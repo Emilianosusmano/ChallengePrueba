@@ -1,5 +1,7 @@
 package com.emilianosusmano.springboot.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -55,5 +57,10 @@ public class FirstServiceImpl implements FirstService {
 				estadisticaDao.countAll());
 		StatsDto statsDto = new StatsDto().build(statsBo);
 		return statsDto;
+	}
+
+	@Override
+	public List<EstadisticaMutante> obtenerDatosEstadistica() {
+		return (List<EstadisticaMutante>) estadisticaDao.findAll();
 	}
 }
