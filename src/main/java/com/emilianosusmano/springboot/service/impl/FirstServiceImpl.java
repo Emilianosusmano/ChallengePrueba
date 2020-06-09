@@ -28,12 +28,12 @@ public class FirstServiceImpl implements FirstService {
 	public ResponseMutante validarMutante(CadenaAdnDto adn) {
 		ResponseMutante response = new ResponseMutante();
 		CadenaAdnBo adnBo = new CadenaAdnBo().build(adn);
-		if (verificadorMutanteService.cadenaValida(adnBo.getDna())) {
+		if (verificadorMutanteService.cadenaValida(adnBo)) {
 			EstadisticaMutante em = new EstadisticaMutante();
-			em.setIsMutant(verificadorMutanteService.isMutant(adnBo.getDna()));
-			em.setDna(verificadorMutanteService.convertirArrayAString(adnBo.getDna()));
-			em.setCantCadenas(adnBo.getDna().length);
-			if (verificadorMutanteService.isMutant(adnBo.getDna())) {
+			em.setIsMutant(verificadorMutanteService.isMutant(adnBo));
+			em.setDna(adnBo.getDna());
+			em.setCantCadenas(adnBo.getCantCadenas());
+			if (verificadorMutanteService.isMutant(adnBo)) {
 				response.setEsMutante("MUTANTE Agregado a Estadistica.");
 				response.setStatus(HttpStatus.OK);
 			} else {
@@ -43,6 +43,8 @@ public class FirstServiceImpl implements FirstService {
 			try {
 				estadisticaDao.save(em);
 			} catch (Exception e) {
+				response.setEsMutante("ERROR al guardar Entidad en Base de Datos.");
+				response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
 			response.setStatus(HttpStatus.BAD_REQUEST);

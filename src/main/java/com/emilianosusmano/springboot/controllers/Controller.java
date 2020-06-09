@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.emilianosusmano.springboot.dto.CadenaAdnDto;
 import com.emilianosusmano.springboot.entities.EstadisticaMutante;
@@ -20,7 +19,7 @@ import com.emilianosusmano.springboot.responses.ResponseStats;
 import com.emilianosusmano.springboot.service.FirstService;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping(path = "/challenge")
 public class Controller {
 	@Autowired
@@ -36,6 +35,8 @@ public class Controller {
 			return response.toStatus200OK();
 		} else if (result.getStatus().equals(HttpStatus.FORBIDDEN)) {
 			return response.toStatus403Forbidden();
+		} else if (result.getStatus().equals(HttpStatus.INTERNAL_SERVER_ERROR)) {
+			return response.toStatus500InternalServerError();
 		}
 
 		return response.toStatus400BadRequest();
@@ -43,17 +44,10 @@ public class Controller {
 
 	@RequestMapping(value = "/stats", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody ResponseObject<ResponseStats> stats(ResponseObject<ResponseStats> response) {
-		ResponseStats result = new ResponseStats().build(firstService.obtenerEstadisticas());
-		response.setResult(result);
-
+		response.setResult(new ResponseStats().build(firstService.obtenerEstadisticas()));
 		return response.toStatus200OK();
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/redirect")
-	public ModelAndView redirigirGoogle() {
-		return new ModelAndView("redirect:http://www.google.com.ar");
-	}
-	
 	@RequestMapping(method = RequestMethod.GET, value = "/obtenerTodos")
 	public ResponseObject<List<EstadisticaMutante>> obtenerTodos(ResponseObject<List<EstadisticaMutante>> response) {
 		response.setResult(firstService.obtenerDatosEstadistica());

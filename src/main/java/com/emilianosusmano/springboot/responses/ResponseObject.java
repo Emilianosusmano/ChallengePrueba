@@ -1,13 +1,9 @@
 package com.emilianosusmano.springboot.responses;
 
-import java.text.MessageFormat;
-
-import org.apache.log4j.Logger;
-
 import com.emilianosusmano.springboot.responses.utils.HTTPResponseCodesEnum;
 
 public class ResponseObject<T> {
-	private static Logger logger = Logger.getLogger(ResponseObject.class);
+//	private static Logger logger = Logger.getLogger(ResponseObject.class);
 
 	private String statusCode;
 	private String statusText;
@@ -49,35 +45,35 @@ public class ResponseObject<T> {
 	public ResponseObject<T> toStatus200OK() {
 		this.setStatusCode(HTTPResponseCodesEnum.STATUS_200.getStatusCode());
 		this.setStatusText(HTTPResponseCodesEnum.STATUS_200.getStatusText());
-		this.loggingTheResponse();
+//		this.loggingTheResponse();
 		return this;
 	}
 
 	public ResponseObject<T> toStatus400BadRequest() {
 		this.setStatusCode(HTTPResponseCodesEnum.STATUS_400.getStatusCode());
 		this.setStatusText(HTTPResponseCodesEnum.STATUS_400.getStatusText());
-		this.loggingTheResponse();
+//		this.loggingTheResponse();
 		return this;
 	}
 
 	public ResponseObject<T> toStatus401Unauthorized() {
 		this.setStatusCode(HTTPResponseCodesEnum.STATUS_401.getStatusCode());
 		this.setStatusText(HTTPResponseCodesEnum.STATUS_401.getStatusText());
-		this.loggingTheResponse();
+//		this.loggingTheResponse();
 		return this;
 	}
 
 	public ResponseObject<T> toStatus403Forbidden() {
 		this.setStatusCode(HTTPResponseCodesEnum.STATUS_403.getStatusCode());
 		this.setStatusText(HTTPResponseCodesEnum.STATUS_403.getStatusText());
-		this.loggingTheResponse();
+//		this.loggingTheResponse();
 		return this;
 	}
 
 	public ResponseObject<T> toStatus500InternalServerError() {
 		this.setStatusCode(HTTPResponseCodesEnum.STATUS_500.getStatusCode());
 		this.setStatusText(HTTPResponseCodesEnum.STATUS_500.getStatusText());
-		this.loggingTheResponse();
+//		this.loggingTheResponse();
 		return this;
 	}
 
@@ -97,8 +93,8 @@ public class ResponseObject<T> {
 				+ "}";
 	}
 
-	public void loggingTheResponse() {
-		logger.info(MessageFormat.format("REST-RESPONSE: status:{0}", this.getStatusCode()));
-	}
+//	public void loggingTheResponse() {
+//		logger.info(MessageFormat.format("REST-RESPONSE: status:{0}", this.getStatusCode()));
+//	}
 
 }

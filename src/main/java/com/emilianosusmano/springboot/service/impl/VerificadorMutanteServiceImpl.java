@@ -2,33 +2,49 @@ package com.emilianosusmano.springboot.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import com.emilianosusmano.springboot.bo.CadenaAdnBo;
 import com.emilianosusmano.springboot.service.VerificadorMutanteService;
 
 @Service
 public class VerificadorMutanteServiceImpl implements VerificadorMutanteService {
 
 	@Override
-	public Boolean isMutant(String[] adn) {
-		char[][] matriz = pasarCadenaAMatriz(adn);
+	public Boolean isMutant(CadenaAdnBo bo) {
+		String[] adnAux = pasarAArregloDeString(bo);
+		char[][] matriz = pasarCadenaAMatriz(adnAux);
 		return resultadoBusquedaSecuenciaMutante(matriz);
 	}
 
 	@Override
-	public Boolean cadenaValida(String[] dna) {
-		for (String str : dna) {
-			str = str.toUpperCase();
-			if (dna.length != str.length() || dna.length < 4) {
-				System.out.println("[CADENA INVALIDA] - ERROR de Ingreso de Datos. Longitud de Cadena Invalida.");
-				return false;
+	public Boolean cadenaValida(CadenaAdnBo bo) {
+		if (bo.getCantCadenas() != null && bo.getCantCadenas() != 0) {
+			String[] dna = pasarAArregloDeString(bo);
+			for (String str : dna) {
+				if (dna.length != str.length() || dna.length < 4) {
+					System.out.println("[CADENA INVALIDA] - ERROR - Longitud de Cadena Invalida.");
+					return false;
+				}
+				if (str.matches(".*[BDEFHIJKLMN�OPQRSUVWXYZ0123456789].*")) {
+					System.out.println("[CADENA INVALIDA] - ERROR - Caracter Invalido.");
+					return false;
+				}
 			}
-			if (str.matches(".*[BDEFHIJKLMN�OPQRSUVWXYZ0123456789].*")) {
-				System.out.println("[CADENA INVALIDA] - ERROR de Ingreso de Datos. Caracter Invalido.");
-				return false;
-			}
+		} else {
+			System.out.println("[CADENA VACIA] - ERROR de Ingreso de Datos");
+			return false;
 		}
-
 		System.out.println("[CADENA VALIDA] - Continuo con carga de datos.");
 		return true;
+	}
+
+	private String[] pasarAArregloDeString(CadenaAdnBo bo) {
+		String[] adnChain = new String[bo.getCantCadenas()];
+		int endString = 0;
+		for (int i = 0; i < bo.getCantCadenas(); i++) {
+			adnChain[i] = bo.getDna().substring(i * bo.getCantCadenas(), bo.getCantCadenas() + endString);
+			endString = endString + bo.getCantCadenas();
+		}
+		return adnChain;
 	}
 
 	private char[][] pasarCadenaAMatriz(String[] dna) {
@@ -42,7 +58,7 @@ public class VerificadorMutanteServiceImpl implements VerificadorMutanteService 
 
 		return matriz;
 	}
-	
+
 	@Override
 	public String convertirArrayAString(String[] array) {
 		String cadena = "";
