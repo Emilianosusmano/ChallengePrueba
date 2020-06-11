@@ -1,18 +1,19 @@
 package com.emilianosusmano.springboot.service;
 
-import java.util.List;
-
 import com.emilianosusmano.springboot.dto.CadenaAdnDto;
+import com.emilianosusmano.springboot.dto.EnviarMailDTO;
 import com.emilianosusmano.springboot.dto.StatsDto;
-import com.emilianosusmano.springboot.entities.EstadisticaMutante;
 import com.emilianosusmano.springboot.responses.ResponseMutante;
+import com.emilianosusmano.springboot.responses.ResponseObtenerTodos;
 
 public interface FirstService {
-	
+
 	ResponseMutante validarMutante(CadenaAdnDto adn);
-	
+
 	StatsDto obtenerEstadisticas();
+
+	ResponseObtenerTodos obtenerDatosEstadistica();
 	
-	List<EstadisticaMutante> obtenerDatosEstadistica();
-		
+	String enviarMailEstadisticas(EnviarMailDTO mail);
+
 }

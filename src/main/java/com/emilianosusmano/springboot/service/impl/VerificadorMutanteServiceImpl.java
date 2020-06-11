@@ -16,25 +16,23 @@ public class VerificadorMutanteServiceImpl implements VerificadorMutanteService 
 	}
 
 	@Override
-	public Boolean cadenaValida(CadenaAdnBo bo) {
+	public String cadenaValida(CadenaAdnBo bo) {
+		String mensajeError = "ERROR de Ingreso de Datos, pruebe ingresando solo las Bases Nitrogenadas (A, C, T, G). "
+				+ "Recuerde que la cantidad de bases nitrogenadas debe ser de NxN con un N mayor o igual a 4";
 		if (bo.getCantCadenas() != null && bo.getCantCadenas() != 0) {
 			String[] dna = pasarAArregloDeString(bo);
 			for (String str : dna) {
 				if (dna.length != str.length() || dna.length < 4) {
-					System.out.println("[CADENA INVALIDA] - ERROR - Longitud de Cadena Invalida.");
-					return false;
+					return "Longitud de Cadena Invalida. " + mensajeError;
 				}
 				if (str.matches(".*[BDEFHIJKLMN�OPQRSUVWXYZ0123456789].*")) {
-					System.out.println("[CADENA INVALIDA] - ERROR - Caracter Invalido.");
-					return false;
+					return "Caracter Invalido. " + mensajeError;
 				}
 			}
 		} else {
-			System.out.println("[CADENA VACIA] - ERROR de Ingreso de Datos");
-			return false;
+			return mensajeError;
 		}
-		System.out.println("[CADENA VALIDA] - Continuo con carga de datos.");
-		return true;
+		return "VALIDA";
 	}
 
 	private String[] pasarAArregloDeString(CadenaAdnBo bo) {

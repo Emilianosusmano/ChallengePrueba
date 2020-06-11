@@ -6,7 +6,7 @@ public interface VerificadorMutanteService {
 
 	Boolean isMutant(CadenaAdnBo bo);
 
-	Boolean cadenaValida(CadenaAdnBo adnBo);
+	String cadenaValida(CadenaAdnBo adnBo);
 
 	String convertirArrayAString(String[] array);
 }

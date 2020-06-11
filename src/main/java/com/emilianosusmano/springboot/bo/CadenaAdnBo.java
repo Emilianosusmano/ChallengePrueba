@@ -7,10 +7,9 @@ public class CadenaAdnBo {
 	private Integer cantCadenas;
 
 	public CadenaAdnBo build(CadenaAdnDto adn) {
-		String aux = adn.getDna().toString().trim().toUpperCase();
-		Double cant = Math.sqrt(aux.length());
+		this.dna = adn.getDna().toUpperCase().replace(" ", "").replace(",", "").replace(".", "");
+		Double cant = Math.sqrt(this.dna.length());
 		if (cant % 1 == 0) {
-			this.dna = aux;
 			this.cantCadenas = cant.intValue();
 		}
 		return this;
